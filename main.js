@@ -16,22 +16,13 @@ let results = []; // why did I make this global
 const multipliers = [2.0, 1.8, 1.6, 1.4, 1.2, 1.0, 1.0, 1.0];
 const points = [15, 12, 10, 8, 6, 5, 4, 3, 2, 1];
 
-let form = document.forms.results;
-form.addEventListener('submit', (event) => {
-    event.preventDefault(); // stop it adding the form info to query in url
-    // fc = form.elements.firstcycling.value;
-    // !! learn how to put promise stuff in a function
+let params = new URLSearchParams(window.location.search);
+results = [params.get('pos1'), params.get('pos2'), params.get('pos3'), params.get('pos4'), params.get('pos5'), params.get('pos6'), params.get('pos7'), params.get('pos8'), params.get('pos9'), params.get('pos10')]
+console.log(results);
 
-    // get results
-    for (let i = 0; i < form.elements.length-2; i++) {
-        results.push(form.elements[i].value);
-    }
-    let cells = document.getElementsByClassName('results-rider');
-    for (let i = 0; i < cells.length; i++) {
-        cells[i].innerText = results[i];
-    }
+updateRaceResult(results);
 
-    let apiURL = form.elements.reddit.value + '/.json?depth=1';
+let apiURL = params.get('reddit') + '/.json?depth=1';
     fetch(apiURL).then(function(resp) {
         // todo: catch network error
         if (resp.status != 200) {
@@ -40,25 +31,26 @@ form.addEventListener('submit', (event) => {
             resp.json().then(function(json) {
                 // raceName = json[0]['data']['children'][0]['data']['title'].split('] ')[1].split(' Predictions')[0]; // Predictions split should be case insensitive
                 let raceName = json[0]['data']['children'][0]['data']['title'].split('] ')[1].split(' -')[0].split('Predictions')[0]; // Predictions split should be case insensitive
-                form.style.display = 'none';
                 let raceTitleElem = document.getElementsByClassName('race-title')[0];
                 raceTitleElem.innerText = raceName + ' RFL Results';
-                raceTitleElem.style.visibility = 'visible';
-                makeElemsVisible();
-                processResults(json[1]['data']['children'], results)
+                // raceTitleElem.style.visibility = 'visible';
+                document.getElementsByTagName('title')[0].innerText = raceName + ' RFL Results';
+                processRFL(json[1]['data']['children'], results)
             })
         }
     });
-});
 
-function makeElemsVisible() {
-    document.getElementsByClassName("container")[0].style.display = 'flex';
-    document.getElementsByClassName("all-results")[0].style.display = 'block';
+function updateRaceResult(results) {
+    let cells = document.getElementsByClassName('results-rider');
+    console.log(cells);
+    for (let i = 0; i < cells.length; i++) {
+        cells[i].innerText = results[i];
+    }
 }
 
 // json: json of reddit comments. results: results array 1st-10th
 // only need top level comments
-function processResults(comments, results) {
+function processRFL(comments, results) {
     let rfl = {};
     rfl = loadEntries(comments, rfl);
     rfl = calculateScores(rfl, results);
