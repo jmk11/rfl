@@ -6,12 +6,16 @@
 // all-results thing is missing some people - even if their comment wasn't right and they got 0 they should still be listed
 // todo: make the whole row in all-results lead to user update
 // todo: allow editing of the result input - or maybe change it to use 2 pages so you can just go back?
+// todo: encode/sanitise reddit content before putting in page - xss
 
 // done: change toLowerCase() so I can put their original comment in the entry section
+// use innerText instead of innerHTML for xss reasons, use table insertCell + innerText instead of innerHTML
+
+let results = []; // why did I make this global
+const multipliers = [2.0, 1.8, 1.6, 1.4, 1.2, 1.0, 1.0, 1.0];
+const points = [15, 12, 10, 8, 6, 5, 4, 3, 2, 1];
 
 let form = document.forms.results;
-let results = [];
-
 form.addEventListener('submit', (event) => {
     event.preventDefault(); // stop it adding the form info to query in url
     // fc = form.elements.firstcycling.value;
@@ -23,7 +27,7 @@ form.addEventListener('submit', (event) => {
     }
     let cells = document.getElementsByClassName('results-rider');
     for (let i = 0; i < cells.length; i++) {
-        cells[i].innerHTML = results[i];
+        cells[i].innerText = results[i];
     }
     // for (let i = 0; i < results.length; i++) {
     //     results[i] = results[i].toLowerCase();
@@ -46,7 +50,7 @@ form.addEventListener('submit', (event) => {
                 let raceName = json[0]['data']['children'][0]['data']['title'].split('] ')[1].split(' -')[0].split('Predictions')[0]; // Predictions split should be case insensitive
                 form.style.display = 'none';
                 let raceTitleElem = document.getElementsByClassName('race-title')[0];
-                raceTitleElem.innerHTML = raceName + ' RFL Results';
+                raceTitleElem.innerText = raceName + ' RFL Results';
                 raceTitleElem.style.visibility = 'visible';
                 makeElemsVisible();
                 processResults(json[1]['data']['children'], results)
@@ -63,20 +67,16 @@ function makeElemsVisible() {
 // json: json of reddit comments. results: results array 1st-10th
 // only need top level comments
 function processResults(json, results) {
-    var rfl = {};
+    let rfl = {};
     // let i = 0;
     // multipliers = {"x2.0": "2.0", "x1.8": "1.8", "x1.6": "1.6", "x1.4": "1.4", "x1.2": "1.2", "x1.0": "1.0"};
-    for (var key in json) {
-        let username = json[key]['data']['author'];
-        // console.log(username);
-        let comment = json[key]['data']['body'];
-        // entry = {};
+    for (let comment in json) {
+        let username = json[comment]['data']['author'];
+        let body = json[comment]['data']['body'];
         let entry = [];
-        // console.log(comment);
-        let lines = comment.split("\n");
-        // console.log(lines);
+        let lines = body.split("\n");
         let multIndex = 0;
-        let multStrs = ["x2.0)", "x1.8)", "x1.6)", "x1.4)", "x1.2)", "x1.0)", "x1.0)", "x1.0)"];
+        const multStrs = ["x2.0)", "x1.8)", "x1.6)", "x1.4)", "x1.2)", "x1.0)", "x1.0)", "x1.0)"];
         // multKeys = ["2.0", "1.8", "1.6", "1.4", "1.2", "1.0a", "1.0b", "1.0c"];
         for (let i = 0; i < lines.length && multIndex < multStrs.length; i++) {
             let rider = lines[i].split(multStrs[multIndex])[1];
@@ -121,13 +121,10 @@ function processResults(json, results) {
 
 function calculateScores(rfl, results) {
     // multipliers = {"2.0": 2.0, "1.8": 1.8, "1.6": 1.6, "1.4": 1.4, "1.2": 1.2, "1.0a": 1.0, "1.0b": 1.0, "1.0c": 1.0};
-    let multipliers = [2.0, 1.8, 1.6, 1.4, 1.2, 1.0, 1.0, 1.0]; // make this global or smth
-    let points = [15, 12, 10, 8, 6, 5, 4, 3, 2, 1]; // should avoid repeating this between js and css, and global or smth
     let order = []; // get users in sorted order somehow
     let maxscore = 0; // temporary, until sorting is done
-    let maxuser = '';
 
-    for (var user of Object.keys(rfl)) {
+    for (let user of Object.keys(rfl)) {
         console.log(rfl[user]['entry']);
         let lcEntry = [];
         for (const rider of rfl[user]['entry']) {
@@ -143,10 +140,6 @@ function calculateScores(rfl, results) {
                 rfl[user]['score'] += points[i]*multipliers[index];
             }
         }
-        if (rfl[user]['score'] >= maxscore) {
-            maxscore = rfl[user]['score'];
-            maxuser = user;
-        }
         console.log(user);
         console.log(rfl[user]['score']);
 
@@ -154,19 +147,33 @@ function calculateScores(rfl, results) {
         //     if (rfl[user]['entry']['key']
         // }
     }
-    writeScores(rfl);
-    updateUserEntry(rfl, maxuser, results);
+    const sortedUsernames = sortUsernames(rfl);
+    console.log(sortedUsernames);
+    writeScores(rfl, sortedUsernames);
+    updateUserEntry(rfl, sortedUsernames[0], results);
+}
+
+function sortUsernames(rfl) {
+    let usernames = [...Object.keys(rfl)];
+    usernames.sort(function (usernameA, usernameB) { // a comes first if score is higher -> return negative if a is higher
+        return rfl[usernameB]['score'] - rfl[usernameA]['score'];
+    });
+    return usernames;
 }
 
 // not sorted yet
-function writeScores(rfl) {
+function writeScores(rfl, usernames) {
     let tbody = document.getElementsByClassName("allresults-tbody")[0];
-    let keys = Object.keys(rfl);
-    for (let i = 0; i < keys.length; i++) {
-        let row = document.createElement("tr");
-        row.innerHTML = `<td>${i+1}</td><td>${keys[i]}</td><td>${rfl[keys[i]]['score'].toFixed(1)}</td>`;
+    for (let i = 0; i < usernames.length; i++) {
+        // let row = document.createElement("tr");
+        // row.innerHTML = `<td>${i+1}</td><td>${usernames[i]}</td><td>${rfl[usernames[i]]['score'].toFixed(1)}</td>`; // xss
+        let row = tbody.insertRow(i);
+        row.insertCell(0).innerText = `${i+1}`;
+        row.insertCell(1).innerText = usernames[i];
+        row.insertCell(2).innerText = rfl[usernames[i]]['score'].toFixed(1);
+
         row.addEventListener('click', (event) => { // declare this as a separate function
-            let username = event.target.innerHTML; // event.srcElement
+            let username = event.target.innerText; // event.srcElement
             console.log(this);
             updateUserEntry(rfl, username, results);
             // window.scrollTo(window.scrollX, 0);
@@ -182,49 +189,46 @@ function writeScores(rfl) {
 }
 
 function updateUserEntry(rfl, username, results) {
-    document.getElementById('username').innerHTML = username + "'s entry";
+    document.getElementById('username').innerText = username + "'s entry";
     let cells = document.getElementsByClassName('user-rider');
     for (let i = 0; i < cells.length; i++) {
-        cells[i].innerHTML = rfl[username]['entry'][i];
+        cells[i].innerText = rfl[username]['entry'][i];
     }
-
-    let multipliers = [2.0, 1.8, 1.6, 1.4, 1.2, 1.0, 1.0, 1.0];
-    let points = [15, 12, 10, 8, 6, 5, 4, 3, 2, 1];
+    
     cells = document.getElementsByClassName('user-multiplier');
     let userPoints = document.getElementsByClassName('user-points');
     // this code repeated from other calculate function
     let score = 0;
     let perfect = true;
     let lcEntry = [];
-        for (const rider of rfl[username]['entry']) {
-            lcEntry.push(rider.toLowerCase());
-        }
-    for (let i = 0; i < results.length; i++) {
-        let index = lcEntry.indexOf(results[i].toLowerCase()); // if repeated (breaks rfl ules), returns first occurence
-        cells[i].classList.remove("incorrect");
-        cells[i].classList.remove("perfect-choice");
-        cells[i].classList.remove("correct");
+    for (const rider of rfl[username]['entry']) {
+        lcEntry.push(rider.toLowerCase());
+    }
+    for (let place = 0; place < results.length; place++) {
+        cells[place].classList.remove("incorrect");
+        cells[place].classList.remove("perfect-choice");
+        cells[place].classList.remove("correct");
+        let index = lcEntry.indexOf(results[place].toLowerCase()); // if repeated (breaks rfl ules), returns first occurence
         if (index != -1) {
             console.log(multipliers[index]);
-            cells[i].innerHTML = '(x' + multipliers[index].toFixed(1) + ')';
-            cells[i].classList.add("correct");
-            if (!(i == index || i > 4)) { // !! not quite right when you get down to the 1.0s
+            cells[place].innerText = '(x' + multipliers[index].toFixed(1) + ')';
+            cells[place].classList.add("correct");
+            if (!(place == index || place > 4)) { // !! not quite right when you get down to the 1.0s. wait it is now?
                 perfect = false;
             }
-            userPoints[i].innerHTML = (points[i]*multipliers[index]).toFixed(1);
-            score += points[i]*multipliers[index];
+            userPoints[place].innerText = (points[place]*multipliers[index]).toFixed(1);
+            score += points[place]*multipliers[index];
             if (perfect == true) {
-                cells[i].classList.add("perfect-choice");
+                cells[place].classList.add("perfect-choice");
             }
         } else {
             perfect = false;
-            userPoints[i].innerHTML = '';
-            cells[i].innerHTML = 'X';
-            cells[i].classList.add("incorrect");
+            userPoints[place].innerText = '';
+            cells[place].innerText = 'X';
+            cells[place].classList.add("incorrect");
         }
-        
     }
-    document.getElementsByClassName("user-score")[0].innerHTML = score.toFixed(1);
+    document.getElementsByClassName("user-score")[0].innerText = score.toFixed(1);
 }
 
 // form.submit();
