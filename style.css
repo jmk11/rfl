@@ -17,8 +17,10 @@ h1 {
 }
 .correct {
     color: mediumseagreen;
+}
+.user-results .correct {
     font-weight: bold;
-    font-size: 1.1em;
+    /* font-size: 1.1em; */
 }
 .perfect-choice {
     color: springgreen !important;

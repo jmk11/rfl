@@ -4,13 +4,14 @@
 // todo: Predictions removal case insensitive
 // all-results thing is missing some people - even if their comment wasn't right and they got 0 they should still be listed
 // todo: make the whole row in all-results lead to user update
-// todo: allow editing of the result input - or maybe change it to use 2 pages so you can just go back?
 // todo: encode/sanitise reddit content before putting in page - xss
 // todo: change so it doesn't all continue from one promise call
 
 // done: change toLowerCase() so I can put their original comment in the entry section
 // use innerText instead of innerHTML for xss reasons, use table insertCell + innerText instead of innerHTML
 // done: add var to declarations
+// done: allow editing of the result input - or maybe change it to use 2 pages so you can just go back?
+
 
 let results = []; // why did I make this global
 const multipliers = [2.0, 1.8, 1.6, 1.4, 1.2, 1.0, 1.0, 1.0];
@@ -110,18 +111,23 @@ function loadEntries(comments, rfl) {
     return rfl;
 }
 
+function simplifyEntry(entry) {
+    let simpleEntry = [];
+    for (const rider of entry) {
+        simpleEntry.push(simplifyRiderName(rider));
+    }
+    return simpleEntry;
+}
+
 function calculateScores(rfl, results) {
     // multipliers = {"2.0": 2.0, "1.8": 1.8, "1.6": 1.6, "1.4": 1.4, "1.2": 1.2, "1.0a": 1.0, "1.0b": 1.0, "1.0c": 1.0};
     for (let user of Object.keys(rfl)) {
         // console.log(rfl[user]['entry']);
-        let lcEntry = [];
-        for (const rider of rfl[user]['entry']) {
-            lcEntry.push(rider.toLowerCase());
-        }
+        let entry = simplifyEntry(rfl[user]['entry']);
         // console.log(lcEntry);
         rfl[user]['score'] = 0;
         for (let i = 0; i < results.length; i++) {
-            let index = lcEntry.indexOf(results[i].toLowerCase()); // if repeated (breaks rfl rules), returns first occurence
+            let index = entry.indexOf(simplifyRiderName(results[i])); // if repeated (breaks rfl rules), returns first occurence
             // repeating toLowerCase() call many times
             if (index != -1) {
                 // console.log(rfl[user]['entry'][index]);
@@ -179,21 +185,22 @@ function updateUserEntry(rfl, username, results) {
     for (let i = 0; i < cells.length; i++) {
         cells[i].innerText = rfl[username]['entry'][i];
     }
+    let positions = document.getElementsByClassName('user-position');
+    for (let cell of positions) {
+        cell.innerText = '';
+    }
     
     cells = document.getElementsByClassName('user-multiplier');
     let userPoints = document.getElementsByClassName('user-points');
     // this code repeated from other calculate function
     let score = 0;
     let perfect = true;
-    let lcEntry = [];
-    for (const rider of rfl[username]['entry']) {
-        lcEntry.push(rider.toLowerCase());
-    }
+    entry = simplifyEntry(rfl[username]['entry']);
     for (let place = 0; place < results.length; place++) {
         cells[place].classList.remove("incorrect");
         cells[place].classList.remove("perfect-choice");
         cells[place].classList.remove("correct");
-        let index = lcEntry.indexOf(results[place].toLowerCase()); // if repeated (breaks rfl ules), returns first occurence
+        let index = entry.indexOf(simplifyRiderName(results[place])); // if repeated (breaks rfl ules), returns first occurence
         if (index != -1) {
             console.log(multipliers[index]);
             cells[place].innerText = '(x' + multipliers[index].toFixed(1) + ')';
@@ -206,6 +213,8 @@ function updateUserEntry(rfl, username, results) {
             if (perfect == true) {
                 cells[place].classList.add("perfect-choice");
             }
+            positions[index].innerText = place+1;
+            positions[index].classList.add('correct');
         } else {
             perfect = false;
             userPoints[place].innerText = '';
@@ -214,6 +223,15 @@ function updateUserEntry(rfl, username, results) {
         }
     }
     document.getElementsByClassName("user-score")[0].innerText = score.toFixed(1);
+}
+
+function simplifyRiderName(name) {
+    name = name.toLowerCase();
+    // remove acutes - https://stackoverflow.com/a/37511463
+    // not complete, eg ?
+    name = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    name = name.replace(/\u0142/g, "l");
+    return name;
 }
 
 // form.submit();
