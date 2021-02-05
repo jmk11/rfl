@@ -79,11 +79,12 @@ function loadEntries(comments) {
 		const username = comment['data']['author'];
 		const body = comment['data']['body'];
 		const entry = [];
-		const lines = body.split('\n');
+		const lines = body.split(/[\n\r]/);
 		let multIndex = 0;
+		console.log(username + ':\n' + body);
 		for (let i = 0; i < lines.length && multIndex < multStrs.length; i++) {
 			let rider = lines[i].split(multStrs[multIndex])[1];
-			if (rider) { 
+			if (rider) {
 				// entry[multKeys[multIndex]] = rider.trim().toLowerCase();
 				entry.push(rider.trim());
 				multIndex++;
