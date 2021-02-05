@@ -22,8 +22,9 @@ h1 {
     font-weight: bold;
     /* font-size: 1.1em; */
 }
-.perfect-choice {
-    color: springgreen !important;
+.correct.perfect-choice {
+    color: springgreen;
+    /* color: springgreen !important; */
 }
 .total-row {
     font-weight: bold;
@@ -84,7 +85,7 @@ th, td {
 .all-results tr:nth-child(even) {
     background: #7bade6;
 } */
-.all-results tbody tr td:nth-child(2):hover {
+.all-results tbody tr /*td:nth-child(2):hover*/ {
     cursor: pointer;
 }
 
