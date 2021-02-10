@@ -89,7 +89,7 @@ th, td {
     cursor: pointer;
 }
 
-form[name="results"] input[name="reddit"] {
+form[name="results"] input[name="r"] {
     width: 700px;
 }
 form[name="results"] td {

@@ -1,10 +1,12 @@
 // !! todo: remove more acutes etc. from rider names
-// !! todo: deal with some comments using \r to terminate lines????
 // wc itt hoo_ts: incorrect formatting - no x ie just (2.0) - should I accomodate that?
 // todo: better case insensitive Predictions removal 
 // all-results thing is missing some people - even if their comment wasn't right and they got 0 they should still be listed
 // todo?: encode/sanitise reddit content before putting in page - xss
+// compress results page url parameters. I haven't found a compression large enough to justify the obfuscation of the url. I could also encode it more efficiently, eg
+// ?Julian+Alaphilippe|Wout+Van+Aert|Marc+Hirschi|Michal+Kwiatkowski|Jakob+Fuglsang|Primoz+Roglic|Michael+Matthews|Alejandro+Valverde|Maximilian+Schachmann|Damiano+Caruso|izsgs1%2Frfl_20_wc_rr_15_days_left_until_the_deadline_on
 
+// done: deal with some comments using \r to terminate lines????
 // done?: change so it doesn't all continue from one promise call
 // done: make the whole row in all-results lead to user update
 // done: change toLowerCase() so I can put their original comment in the entry section
@@ -22,21 +24,22 @@ main();
 
 async function main() {
 	const params = new URLSearchParams(window.location.search);
-	results = [params.get('pos1'), params.get('pos2'), params.get('pos3'), params.get('pos4'), params.get('pos5'), params.get('pos6'), params.get('pos7'), params.get('pos8'), params.get('pos9'), params.get('pos10')];
+	results = [params.get('p1'), params.get('p2'), params.get('p3'), params.get('p4'), params.get('p5'), params.get('p6'), params.get('p7'), params.get('p8'), params.get('p9'), params.get('p10')]; // pos1
 
 	updateRaceResult(results);
 	results = simplifyEntry(results); // only need the exact rider names for setting the table
 
-	const apiURL = params.get('reddit') + '/.json?depth=1';
+	const apiURL = params.get('r') + '/.json?depth=1';
 	const raceTitleElem = document.getElementsByClassName('race-title')[0];
 	try {
 		const resp = await fetch(apiURL);
 		if (resp.status != 200) {
-			throw Error;
+			throw Error('Non-200 response status');
 		}
 		const json = await resp.json();
 		const postTitle = json[0]['data']['children'][0]['data']['title'];
 		const raceTitle = postTitle.split(']')[1].split(/(predictions|-)/i)[0]; //.trim();
+		// title is generally of format: "[RFL 20] Fleche Wallonne Predictions - 1.5 days left until the deadline on September 30th!"
 		// raceName = json[0]['data']['children'][0]['data']['title'].split('] ')[1].split(' Predictions')[0]; // Predictions split should be case insensitive
 		// const raceTitle = json[0]['data']['children'][0]['data']['title'].split('] ')[1].split(' -')[0].split('Predictions')[0].split('predictions')[0]; // Predictions split should be case insensitive
 		// const match = json[0]['data']['children'][0]['data']['title'].match(/](?<race>.*?)(?:predictions|-)/i);
@@ -48,6 +51,7 @@ async function main() {
 		processRFL(json[1]['data']['children'], results);
 	} catch (err) {
 		raceTitleElem.innerText = 'Error with reddit request.';
+		console.log(err);
 	}
 }
 
