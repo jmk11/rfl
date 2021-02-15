@@ -1,11 +1,10 @@
 // !! todo: remove more acutes etc. from rider names
-// wc itt hoo_ts: incorrect formatting - no x ie just (2.0) - should I accomodate that?
-// todo: better case insensitive Predictions removal 
 // all-results thing is missing some people - even if their comment wasn't right and they got 0 they should still be listed
 // todo?: encode/sanitise reddit content before putting in page - xss
 // compress results page url parameters. I haven't found a compression large enough to justify the obfuscation of the url. I could also encode it more efficiently, eg
 // ?Julian+Alaphilippe|Wout+Van+Aert|Marc+Hirschi|Michal+Kwiatkowski|Jakob+Fuglsang|Primoz+Roglic|Michael+Matthews|Alejandro+Valverde|Maximilian+Schachmann|Damiano+Caruso|izsgs1%2Frfl_20_wc_rr_15_days_left_until_the_deadline_on
 
+// done?: better case insensitive Predictions removal 
 // done: deal with some comments using \r to terminate lines????
 // done?: change so it doesn't all continue from one promise call
 // done: make the whole row in all-results lead to user update
