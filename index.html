@@ -8,7 +8,7 @@
   <body>
     <script src="index.js"></script>
 
-    <form name="results" onsubmit="handleForm(event)">
+    <form name="results" onsubmit="handleForm(event)" action="results.html">
       <h1>RFL Calculator</h1>
       <p>Enter top 10 and link to reddit predictions page.<br>
         Make sure to spell all names correctly or the calculation will be incorrect.</p>
@@ -61,7 +61,8 @@
           </tr>
         </tbody>
       </table>
-      <input type="url" name="reddit" placeholder="Link to reddit page" required value="https://www.reddit.com/r/peloton/comments/izsgs1/rfl_20_wc_rr_15_days_left_until_the_deadline_on/">
+      <input type="url" placeholder="Link to reddit page" required value="https://www.reddit.com/r/peloton/comments/izsgs1/rfl_20_wc_rr_15_days_left_until_the_deadline_on/">
+      <input hidden name="r">
       <input type="submit" value="Get results">
     </form>
     <!-- <script id="lzutf8" src="https://cdn.jsdelivr.net/npm/lzutf8/build/production/lzutf8.js"></script> -->
