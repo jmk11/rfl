@@ -1,12 +1,4 @@
-// Problem: changing the actual values means that the values stick after confirming and going back
-// would be better to make another form or smth
-
-// What to do with situation where some are filled in and some not?
-// Could just display a message
-// Or could have a function onchange of all the input fields, if any one is non-empty, then all are required.
-// else none are required.
-
-// Clear all input fields
+// Clear all input fields, quality of life
 function clearAll(event) {
 	for (const e of event.target.form.elements) {
 		if (['text', 'url'].includes(e.type)) {
@@ -17,7 +9,8 @@ function clearAll(event) {
 }
 
 // On change of any element of the form: if all fields are empty, set none to required.
-// Otherwise, set all to required.
+// Otherwise, set all to required
+// So that the form can be submitted with either all empty elements, which will use default, or all set elements
 function inputChange(event) {
 	console.log('form on change');
 	console.log(event);
@@ -29,12 +22,6 @@ function inputChange(event) {
 	}
 }
 
-// function test(event) {
-// 	console.log('copy form submit');
-// 	event.preventDefault();
-// 	return false;
-// }
-
 function handleForm(event) {
 	const form = event.target;
 	console.log(form.elements);
@@ -42,13 +29,9 @@ function handleForm(event) {
 	const elements = Array.from(form.elements).filter(element => ['text', 'url'].includes(element.type));
 	console.log(elements);
 	if (elements.every(element => !element.value)) { // all fields empty
-		// elements.forEach(element => element.value = element.placeholder);
-
-		// let copyForm = document.forms.copyform;
+		// use a separate form so that the changed values don't stick when the page is returned to with the back button
 		const copyForm = form.cloneNode(true);
 		copyForm.setAttribute('hidden', 'true');
-		// copyForm.onsubmit = test;
-		// copyForm.action = '';
 		copyForm.name = 'copyform';
 		for (const e of copyForm.elements) {
 			e.value = e.placeholder;
