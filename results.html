@@ -152,18 +152,29 @@
 
     <div class="all-results">
       <h2>All results</h2>
-      <table>
-        <thead>
-          <th>Position</th>
-          <th>Username</th>
-          <th>Points</th>
-        </thead>
-        <tbody class="allresults-tbody">
-        </tbody>
-      </table>
+      <div class="all-results-container">
+        <table>
+          <thead>
+            <th>Position</th>
+            <th>Username</th>
+            <th>Points</th>
+          </thead>
+          <tbody class="allresults-tbody">
+          </tbody>
+        </table>
+        <div class="search">
+          <h3>Search</h3>
+          <input type="search" name="search-username" oninput="searchResults(event)" placeholder="Username">
+        <!-- <form name="search"> -->
+        <!-- </form> -->
+        </div>
+      </div>
     </div>
 
-    <script src="main.js"></script>
+    <script src="results.js"></script>
   </body>
+  <footer>
+  	Results are unofficial and may differ from official r/peloton results, for example in cases of spelling differences, formatting differences or entries submitted outside time limits.
+  </footer>
 
 </html>

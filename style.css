@@ -79,14 +79,43 @@ th, td {
     background: #ff4136;
     /*cursor: pointer;*/
 }
-/* .all-results th {
+.all-results th {
     background: #1666c2;
 }
-.all-results tr:nth-child(even) {
+/* .all-results tr:not(.hidden):nth-of-type(even) { /*nth-child *//*
     background: #7bade6;
 } */
+.all-results tr.even { /*nth-child */
+    background: #7bade6;
+}
 .all-results tbody tr /*td:nth-child(2):hover*/ {
     cursor: pointer;
+}
+/* Using visibility:collapse to keep row width the same but condense page height: https://stackoverflow.com/a/45864060 */
+tr.hidden {
+    /* display: none; */
+    visibility: collapse;
+    line-height: 0;
+    /* height: 0; */
+    /* visibility: collapse keeps the table width the same. Unfortunately it also keeps the height the same and seems to remove innerText */
+}
+tr.hidden * {
+    padding-bottom: 0;
+    padding-top: 0;
+    /* border: none; */
+}
+.all-results-container {
+    display: flex;
+    align-items: flex-start;
+}
+.all-results-container .search {
+    margin-left: 150px; /* edit, don't use margin */
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+}
+.all-results-container input {
+    height: 50px;
 }
 
 form[name="results"] input[name="r"] {
@@ -105,3 +134,13 @@ form[name="results"] p {
 .race-title {
     visibility: hidden;
 } */
+
+footer {
+	background: navy; /* royalblue */
+	color: #eeeeee;
+	font-family: serif;
+	font-size: 0.92em;
+	padding: 15px;
+}
+
+/* Giro color: #ff286e */

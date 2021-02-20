@@ -15,6 +15,8 @@
 
 
 let results = [];
+let sortedUsernames = []; // to avoid making global, could add searchResults() event using js closure?
+let rflEntries = {};
 const points = [15, 12, 10, 8, 6, 5, 4, 3, 2, 1];
 const multipliers = [2.0, 1.8, 1.6, 1.4, 1.2, 1.0, 1.0, 1.0];
 const multStrs = ['x2.0)', 'x1.8)', 'x1.6)', 'x1.4)', 'x1.2)', 'x1.0)', 'x1.0)', 'x1.0)'];
@@ -43,8 +45,8 @@ async function main() {
 		// const raceTitle = json[0]['data']['children'][0]['data']['title'].split('] ')[1].split(' -')[0].split('Predictions')[0].split('predictions')[0]; // Predictions split should be case insensitive
 		// const match = json[0]['data']['children'][0]['data']['title'].match(/](?<race>.*?)(?:predictions|-)/i);
 		// const raceTitle = (match && match.groups && match.groups.race) || '';
-		
-		raceTitleElem.innerText = raceTitle + ' RFL Results';
+
+		raceTitleElem.innerText = raceTitle + ' RFL Results'; // (unofficial)
 		// document.getElementsByTagName('title')[0].innerText = raceTitle + ' RFL Results';
 		document.title = raceTitle + ' RFL Results';
 		processRFL(json[1]['data']['children'], results);
@@ -56,7 +58,7 @@ async function main() {
 
 // Update text of race result table
 function updateRaceResult(results) {
-	let cells = document.getElementsByClassName('results-rider');
+	const cells = document.getElementsByClassName('results-rider');
 	console.log(cells);
 	for (let i = 0; i < cells.length; i++) {
 		cells[i].innerText = results[i];
@@ -66,9 +68,9 @@ function updateRaceResult(results) {
 // json: json of reddit comments. results: results array 1st-10th
 // only need top level comments
 function processRFL(comments, results) {
-	let rflEntries = loadEntries(comments);
+	rflEntries = loadEntries(comments);
 	rflEntries = calculateScores(rflEntries, results);
-	const sortedUsernames = sortUsernames(rflEntries);
+	sortedUsernames = sortUsernames(rflEntries); // const
 	updateResults(rflEntries, sortedUsernames);
 	updateUserEntry(rflEntries, sortedUsernames[0], results);
 }
@@ -77,7 +79,7 @@ function processRFL(comments, results) {
 // weird cases test
 // this assumes that entries are in order x2.0, x1.8?
 function loadEntries(comments) {
-	let rflEntries = {};
+	let entries = {};
 	for (const comment of comments) {
 		const username = comment['data']['author'];
 		const body = comment['data']['body'];
@@ -93,8 +95,8 @@ function loadEntries(comments) {
 				multIndex++;
 			}
 		}
-		rflEntries[username] = { 'entry': entry };
-		
+		entries[username] = { 'entry': entry };
+
 		// i++;
 		// console.log(username);
 		// console.log(lines);
@@ -124,12 +126,12 @@ function loadEntries(comments) {
 		// console.log(entry['x2.0']);
 	}
 	// console.log(rflEntries);
-	return rflEntries;
+	return entries;
 }
 
 function calculateScores(rflEntries, results) {
-	for (let user of Object.keys(rflEntries)) {
-		let entry = simplifyEntry(rflEntries[user]['entry']); // only simplify at this point so that the full version is displayed
+	for (const user of Object.keys(rflEntries)) {
+		const entry = simplifyEntry(rflEntries[user]['entry']); // only simplify at this point so that the full version is displayed
 		rflEntries[user]['score'] = 0;
 		for (let place = 0; place < results.length; place++) {
 			const EntryIndex = entry.indexOf((results[place])); // Get index of result rider in entry
@@ -148,8 +150,8 @@ function calculateScores(rflEntries, results) {
 
 // Return list of usernames sorted by descending score
 function sortUsernames(rflEntries) {
-	let usernames = [...Object.keys(rflEntries)];
-	usernames.sort(function (usernameA, usernameB) { // a comes first if score is higher -> return negative if a is higher
+	const usernames = [...Object.keys(rflEntries)];
+	usernames.sort((usernameA, usernameB) => { // a comes first if score is higher -> return negative if a is higher
 		return rflEntries[usernameB]['score'] - rflEntries[usernameA]['score'];
 	});
 	return usernames;
@@ -157,15 +159,21 @@ function sortUsernames(rflEntries) {
 
 // Update list of all user entries and scores
 function updateResults(rflEntries, usernames) {
-	let tbody = document.getElementsByClassName('allresults-tbody')[0];
+	// usernames = usernames.filter(u => u.match(/x/i));
+	const tbody = document.getElementsByClassName('allresults-tbody')[0];
+	let even = false;
 	for (let i = 0; i < usernames.length; i++) {
 		const row = tbody.insertRow(i);
 		// row.setAttribute('username', usernames[i]); // storing this in dom bad?
 		row.insertCell(0).innerText = `${i + 1}`; // position in results
-		let username = row.insertCell(1); // username
+		const username = row.insertCell(1); // username
 		username.innerText = usernames[i];
 		username.classList.add('results-username');
 		row.insertCell(2).innerText = rflEntries[usernames[i]]['score'].toFixed(1); // score
+		if (even) {
+			row.classList.add('even');
+		}
+		even = !even;
 
 		// username.addEventListener('click', (event) => { // closure for rflEntries
 		row.addEventListener('click', () => { // closure for rflEntries
@@ -193,6 +201,7 @@ function updateUserEntry(rflEntries, username, results) {
 		cell.innerText = '';
 	}
 
+	// Calculate score while setting multiplier and points per rider
 	const multiplierCells = document.getElementsByClassName('user-multiplier');
 	const userPointsCells = document.getElementsByClassName('user-points');
 	// this code repeated from other calculate function
@@ -232,7 +241,7 @@ function updateUserEntry(rflEntries, username, results) {
 
 // Create new list of rider's names, simplified by removing case and acutes etc.
 function simplifyEntry(entry) {
-	let simpleEntry = [];
+	const simpleEntry = [];
 	for (const rider of entry) {
 		simpleEntry.push(simplifyRiderName(rider));
 	}
@@ -259,3 +268,68 @@ function simplifyRiderName(name) {
 //         })
 //     }
 // });
+
+function searchResults(event) {
+	// unHideResults();
+	const username = event.target.value;
+	// if (username) {
+	const re = new RegExp(username, 'i');
+	const usernameElems = Array.from(document.getElementsByClassName('results-username'));
+	let even = false;
+	for (const e of usernameElems) {
+		const row = e.parentNode;
+		// console.log(e.innerText);
+		// console.log(e);
+		// console.log(e.innerText.match(re));
+		// visibility: collapse seems to remove innerText, while display: none didn't.
+		// So I'm using textContent here instead.
+		if (e.textContent.match(re)) {
+			row.classList.remove('hidden');
+			if (even) {
+				row.classList.add('even');
+			} else {
+				row.classList.remove('even');
+			}
+			even = !even;
+		} else {
+			row.classList.add('hidden');
+		}
+	}
+
+	// const nonmatching = sortedUsernames.filter(u => !u.match(re));
+	// hideResults(nonmatching);
+	// console.log(username);
+	/* } //else {
+			//unHideResults();
+		}*/
+}
+
+// function setVisibleRows(usernames) {
+// 	const usernameElems = Array.from(document.getElementsByClassName('results-username'));
+// 	for (const e of usernameElems) {
+// 		if 
+// 	}
+// }
+
+// function hideResults(usernames) {
+// 	const usernameElems = Array.from(document.getElementsByClassName('results-username'));
+// 	const hideElems = usernameElems.filter(u => usernames.includes(u.innerText)); // intersection
+// 	hideElems.forEach(e => e.parentNode.classList.add('hidden')); // doesn't work?
+// 	// for (const e of hideElems) {
+// 	// 	console.log(e);
+// 	// 	e.parentNode.classList.add('hidden');
+// 	// }
+// }
+
+// function unHideResults() {
+// 	const usernameElems = Array.from(document.getElementsByClassName('results-username'));
+// 	usernameElems.forEach(e => e.parentNode.classList.remove('hidden'));
+// }
+
+// Keep correct position numbers after searching:
+// Could delete rows from DOM, and store positions in sortedUsernames array as {name, position}, or get index in sortedUsernames array
+//	- Could delete rows but keep elements objects in global list
+//	- Could delete rows and recreate them
+// Could just hide rows eg with display: none - but this breaks odd/even row css 
+// 	- Tried to use :not(.hidden):nth-of-type(even) but it didn't work
+//	- Would need more js to manually select the odd rows
