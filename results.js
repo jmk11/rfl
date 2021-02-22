@@ -33,7 +33,7 @@ async function main() {
 	const apiURL = params.get('r') + '/.json?depth=1';
 	const raceTitleElem = document.getElementsByClassName('race-title')[0];
 	try {
-		const resp = await fetch(apiURL);
+		const resp = await fetch(apiURL, {credentials: 'omit'}); // mode cors?
 		if (resp.status != 200) {
 			throw Error('Non-200 response status');
 		}
@@ -88,14 +88,15 @@ function loadEntries(comments) {
 		let multIndex = 0;
 		console.log(username + ':\n' + body);
 		for (let i = 0; i < lines.length && multIndex < multStrs.length; i++) {
-			let rider = lines[i].split(multStrs[multIndex])[1];
+			const rider = lines[i].split(multStrs[multIndex])[1];
 			if (rider) {
 				// entry[multKeys[multIndex]] = rider.trim().toLowerCase();
 				entry.push(rider.trim());
 				multIndex++;
 			}
 		}
-		entries[username] = { 'entry': entry };
+		console.log(comment['data']['permalink']);
+		entries[username] = { 'entry': entry, 'link': comment['data']['permalink'] };
 
 		// i++;
 		// console.log(username);
@@ -192,6 +193,7 @@ function updateResults(rflEntries, usernames) {
 // Update user entry to display user username's entry and results
 function updateUserEntry(rflEntries, username, results) {
 	document.getElementById('username').innerText = username + '\'s entry';
+	document.getElementById('user-link').href = 'https://reddit.com' + rflEntries[username]['link'];
 	const riderCells = document.getElementsByClassName('user-rider'); // user's entry on left
 	for (let i = 0; i < riderCells.length; i++) {
 		riderCells[i].innerText = rflEntries[username]['entry'][i];
