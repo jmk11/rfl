@@ -2,8 +2,11 @@
 https://jmk11.github.io/rfl
 
 ## Examples
-2020 WC RR: https://jmk11.github.io/rfl/results.html?pos1=Julian+Alaphilippe&pos2=Wout+Van+Aert&pos3=Marc+Hirschi&pos4=Michal+Kwiatkowski&pos5=Jakob+Fuglsang&pos6=Primoz+Roglic&pos7=Michael+Matthews&pos8=Alejandro+Valverde&pos9=Maximilian+Schachmann&pos10=Damiano+Caruso&reddit=https%3A%2F%2Fwww.reddit.com%2Fr%2Fpeloton%2Fcomments%2Fizsgs1%2Frfl_20_wc_rr_15_days_left_until_the_deadline_on%2F
+2020 Men's WC RR: https://jmk11.github.io/rfl/results.html?p1=Julian+Alaphilippe&p2=Wout+Van+Aert&p3=Marc+Hirschi&p4=Michal+Kwiatkowski&p5=Jakob+Fuglsang&p6=Primoz+Roglic&p7=Michael+Matthews&p8=Alejandro+Valverde&p9=Maximilian+Schachmann&p10=Damiano+Caruso&r=izsgs1
 
-2020 Fleche Wallone: https://jmk11.github.io/rfl/results.html?pos1=Marc+Hirschi&pos2=Benoit+Cosnefroy&pos3=Michael+Woods&pos4=Warren+Barguil&pos5=Dan+Martin&pos6=Michal+Kwiatkowski&pos7=Patrick+Konrad&pos8=Richie+Porte&pos9=Tadej+Pogacar&pos10=Simon+Geschke&reddit=https%3A%2F%2Fwww.reddit.com%2Fr%2Fpeloton%2Fcomments%2Fj1m0ir%2Frfl_20_fleche_wallonne_predictions_15_days_left%2F
+2020 Men's Fleche Wallone: https://jmk11.github.io/rfl/results.html?p1=Marc+Hirschi&p2=Benoit+Cosnefroy&p3=Michael+Woods&p4=Warren+Barguil&p5=Dan+Martin&p6=Michal+Kwiatkowski&p7=Patrick+Konrad&p8=Richie+Porte&p9=Tadej+Pogacar&p10=Simon+Geschke&r=j1m0ir
 
+2020 Women's LBL: https://jmk11.github.io/rfl/results.html?p1=Elizabeth+Deignan&p2=Grace+Brown&p3=Ellen+Van+Dijk&p4=Marianne+Vos&p5=Amy+Pieters&p6=Hannah+Barnes&p7=Marlen+Reusser&p8=Juliette+Labous&p9=Katrine+Aalerud&p10=Liane+Lippert&r=j3r4fr
+
+2020 Women's Gent-Wevelgem: https://jmk11.github.io/rfl/results.html?p1=Jolien+D%27Hoore&p2=Lotte+Kopecky&p3=Lisa+Brennauer&p4=Sarah+Roy&p5=Marta+Cavalli&p6=Lauren+Stephens&p7=Demi+Vollering&p8=Elizabeth+Deignan&p9=Amy+Pieters&p10=Elisa+Longo+Borghini&r=j7kiwq
 
