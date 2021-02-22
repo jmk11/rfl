@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8"/>
     <title>RFL</title>
     <link rel="stylesheet" href="style.css">
   </head>
 
-  <body>
-    <h1 class="race-title">Waiting for reddit response...</h1>
+  <body class="results">
+    <h1 id="race-title">Waiting for reddit response...</h1>
     <div class="container">
       <div class="user-entry">
         <h3 id="username">Your entry</h3>
@@ -57,9 +58,10 @@
             <td class="user-position"></td>
           </tr>
         </table>
+        <p><a class="user-link" id="user-link">Comment permalink</a></p>
       </div>
 
-      <div class="user-results">
+      <div class="user-results" id="user-results">
         <h3>Race result</h3>
         <table>
           <tr>
@@ -139,12 +141,12 @@
             <td class="user-multiplier"></td>
             <td class="user-points"></td>
           </tr>
-          <tr class="total-row">
+          <tr> <!-- class="total-row" -->
             <td></td>
             <td></td>
             <td></td>
             <td>Score:</td>
-            <td class="user-score">51.2</td>
+            <td id="user-score"></td>
           </tr>
         </table>
       </div>
@@ -152,18 +154,29 @@
 
     <div class="all-results">
       <h2>All results</h2>
-      <table>
-        <thead>
-          <th>Position</th>
-          <th>Username</th>
-          <th>Points</th>
-        </thead>
-        <tbody class="allresults-tbody">
-        </tbody>
-      </table>
+      <div class="all-results-container">
+        <table>
+          <thead>
+            <th>Position</th>
+            <th>Username</th>
+            <th>Points</th>
+          </thead>
+          <tbody id="allresults-tbody">
+          </tbody>
+        </table>
+        <div class="search">
+          <h3>Search</h3>
+          <input type="search" name="search-username" oninput="searchResults(event)" placeholder="Username">
+        <!-- <form name="search"> -->
+        <!-- </form> -->
+        </div>
+      </div>
     </div>
 
-    <script src="main.js"></script>
+    <script src="results.js"></script>
   </body>
+  <footer>
+  	Results are unofficial and may differ from official r/peloton results, for example in cases of spelling differences, formatting differences or entries submitted outside time limits.
+  </footer>
 
 </html>
