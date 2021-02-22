@@ -248,14 +248,3 @@ function simplifyRiderName(name) {
 	name = name.replace(/\u0142/g, 'l');
 	return name;
 }
-
-// fc and pcs both don't have usable CORS
-// fetch(fc).then(function(resp) {
-//     if (resp.status != 200) {
-//         alert('Error getting response from firstcycling.');
-//     } else {
-//         resp.text().then(function(text) {
-//             alert(text);
-//         })
-//     }
-// });
