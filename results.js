@@ -194,6 +194,7 @@ function updateResults(rflEntries, usernames) {
 function updateUserEntry(rflEntries, username, results) {
 	document.getElementById('username').innerText = username + '\'s entry';
 	document.getElementById('user-link').href = 'https://reddit.com' + rflEntries[username]['link'];
+	// shorter comment link: https://www.reddit.com/comments/izsgs1/g6n6pkl/
 	const riderCells = document.getElementsByClassName('user-rider'); // user's entry on left
 	for (let i = 0; i < riderCells.length; i++) {
 		riderCells[i].innerText = rflEntries[username]['entry'][i];
