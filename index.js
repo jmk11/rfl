@@ -11,12 +11,23 @@
 function handleForm(event) {
 	const form = event.target;
 	const link = form.querySelector('input[type=url]').value;
+	// other options for link formats: https://redd.it/izsgs1, https://www.reddit.com/comments/izsgs1, https://www.reddit.com/r/peloton/comments/izsgs1
+	// .json works on the second two, not on the first. The first one only serves redirects
+
 	// const suffix = link.split(/reddit\.com\/r\/peloton\/comments\//i)[1].replace(/\/+$/, '');
-	const suffix = link.match(/reddit\.com\/r\/peloton\/comments\/(.+?)(?:\/+)?$/)[1]; // Better way to get group than index?
-	if (suffix) {
-		form.elements.r.value = suffix;
-	} else {
-		// error
+	// const suffix = link.match(/reddit\.com\/r\/peloton\/comments\/(.+?)(?:\/+)?$/)[1]; // Better way to get group than index?
+	// const linkid = link.match(/reddit\.com\/r\/peloton\/comments\/(.+?)\//)[1];
+	// reddit\.com\/(?:r\/peloton\/)?comments\/(.+?)\/
+	try {
+		const linkid = link.match(/reddit\.com\/(?:r\/peloton\/)?comments\/(.*?)(?:\/|$)/)[1];
+		if (linkid) {
+			form.elements.r.value = linkid;
+		} else {
+			throw Error;
+		}
+	} catch {
+		alert('Link error');
+		event.preventDefault();
 	}
 
 	// 	// form.submit();

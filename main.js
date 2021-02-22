@@ -28,7 +28,7 @@ async function main() {
 	updateRaceResult(results);
 	results = simplifyEntry(results); // only need the exact rider names for setting the table
 
-	const apiURL = 'https://www.reddit.com/r/peloton/comments/' + params.get('r') + '/.json?depth=1';
+	const apiURL = 'https://www.reddit.com/comments/' + params.get('r') + '/.json?depth=1'; // 'https://www.reddit.com/r/peloton/comments/'
 	const raceTitleElem = document.getElementsByClassName('race-title')[0];
 	try {
 		const resp = await fetch(apiURL);
