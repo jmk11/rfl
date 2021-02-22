@@ -89,7 +89,8 @@ th, td {
     cursor: pointer;
 }
 
-form[name="results"] input[name="r"] {
+/* form[name="results"] input[name="r"] { */
+form[name="results"] input[type="url"] {
     width: 700px;
 }
 form[name="results"] td {
