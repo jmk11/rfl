@@ -5,8 +5,8 @@
     <link rel="stylesheet" href="style.css">
   </head>
 
-  <body>
-    <h1 class="race-title">Waiting for reddit response...</h1>
+  <body class="results">
+    <h1 id="race-title">Waiting for reddit response...</h1>
     <div class="container">
       <div class="user-entry">
         <h3 id="username">Your entry</h3>
@@ -60,7 +60,7 @@
         <p><a class="user-link" id="user-link">Comment permalink</a></p>
       </div>
 
-      <div class="user-results">
+      <div class="user-results" id="user-results">
         <h3>Race result</h3>
         <table>
           <tr>
@@ -145,7 +145,7 @@
             <td></td>
             <td></td>
             <td>Score:</td>
-            <td class="user-score"></td>
+            <td id="user-score"></td>
           </tr>
         </table>
       </div>
@@ -160,7 +160,7 @@
             <th>Username</th>
             <th>Points</th>
           </thead>
-          <tbody class="allresults-tbody">
+          <tbody id="allresults-tbody">
           </tbody>
         </table>
         <div class="search">

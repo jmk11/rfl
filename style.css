@@ -11,34 +11,42 @@ h1 {
     padding: 10px 30px;
 }
 
-.incorrect {
+table {
+    border-collapse: collapse;
+}
+th, td {
+    padding: 10px;
+}
+
+/* User result table - top part of screen */
+.results .incorrect {
     color: red;
     /* text-align: center; */
 }
-.correct {
+.results .correct {
     color: mediumseagreen;
 }
-.user-results .correct {
+.results .user-results .correct {
     font-weight: bold;
     /* font-size: 1.1em; */
 }
-.correct.perfect-choice {
+.results .correct.perfect-choice {
     color: springgreen;
     /* color: springgreen !important; */
 }
-.total-row {
+.results .user-results tr:last-of-type { /* .results .total-row */
     font-weight: bold;
 }
 
-.container {
+.results .container {
     display: flex;
     width: 100%;
 }
-.container > div {
+.results .container > div {
     padding: 10px 50px;
 }
 
-.container > div:first-child {
+.results .container > div:first-child { /* why using a selector like this */
     /* background: #F3A712; */
     /* background: #417B5A; */
     background: #aaaaaa;
@@ -64,83 +72,75 @@ h1 {
     background: #D7B29D;
 } */
 
-table {
-    border-collapse: collapse;
-}
-th, td {
-    padding: 10px;
-}
-
-.all-results {
+/* All results list - bottom part of screen */
+.results .all-results {
     padding: 10px 50px 50px;
     /* background: #4F86C6; */
 }
-.all-results tbody tr:hover {
+.results .all-results tbody tr:hover {
     background: #ff4136;
     /*cursor: pointer;*/
 }
-.all-results th {
+.results .all-results th {
     background: #1666c2;
 }
 /* .all-results tr:not(.hidden):nth-of-type(even) { /*nth-child *//*
     background: #7bade6;
 } */
-.all-results tr.even { /*nth-child */
+.results .all-results tr.even { /*nth-child */
     background: #7bade6;
 }
-.all-results tbody tr /*td:nth-child(2):hover*/ {
+.results .all-results tbody tr /*td:nth-child(2):hover*/ {
     cursor: pointer;
 }
 /* Using visibility:collapse to keep row width the same but condense page height: https://stackoverflow.com/a/45864060 */
-tr.hidden {
+.results tr.hidden {
     /* display: none; */
     visibility: collapse;
     line-height: 0;
     /* height: 0; */
     /* visibility: collapse keeps the table width the same. Unfortunately it also keeps the height the same and seems to remove innerText */
 }
-tr.hidden * {
+.results tr.hidden * {
     padding-bottom: 0;
     padding-top: 0;
     /* border: none; */
 }
-.all-results-container {
+.results .all-results-container {
     display: flex;
     align-items: flex-start;
 }
-.all-results-container .search {
+.results .search {
     margin-left: 150px; /* edit, don't use margin */
     position: -webkit-sticky;
     position: sticky;
     top: 0;
 }
-.all-results-container input {
+.results .search input {
     height: 50px;
 }
 
-form[name="results"] input[name="r"] {
-    width: 700px;
-}
-form[name="results"] td {
-    padding: 5px;
-}
-form[name="results"] h1 {
-    padding: 0 30px;
-}
-form[name="results"] p {
-    padding: 0 20px;
-}
-/* 
-.race-title {
-    visibility: hidden;
-} */
-
-footer {
+/* Footer */
+.results footer {
 	background: navy; /* royalblue */
 	color: #eeeeee;
 	font-family: serif;
 	font-size: 0.92em;
 	padding: 15px;
+}
+
+/* Index page */
+.index form[name="results"] input[name="r"] {
+    width: 700px;
+}
+.index form[name="results"] td {
+    padding: 5px;
+}
+.index form[name="results"] h1 {
+    padding: 0 30px;
+}
+.index form[name="results"] p {
+    padding: 0 20px;
 }
 
 /* Giro color: #ff286e */

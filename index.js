@@ -11,9 +11,8 @@ function clearAll(event) {
 // On change of any element of the form: if all fields are empty, set none to required.
 // Otherwise, set all to required
 // So that the form can be submitted with either all empty elements, which will use default, or all set elements
+// Possibly should change to validate the form and manually set required messages/visuals on submission
 function inputChange(event) {
-	console.log('form on change');
-	console.log(event);
 	const elements = Array.from(event.target.form.elements).filter(element => ['text', 'url'].includes(element.type));
 	if (elements.every(e => !e.value)) {
 		elements.forEach(e => e.removeAttribute('required'));
@@ -22,12 +21,13 @@ function inputChange(event) {
 	}
 }
 
+// If all form elements are set, submit as is
+// If no elements are set, use default values
+// Otherwise, error
 function handleForm(event) {
 	const form = event.target;
-	console.log(form.elements);
 
 	const elements = Array.from(form.elements).filter(element => ['text', 'url'].includes(element.type));
-	console.log(elements);
 	if (elements.every(element => !element.value)) { // all fields empty
 		// use a separate form so that the changed values don't stick when the page is returned to with the back button
 		const copyForm = form.cloneNode(true);
@@ -36,7 +36,6 @@ function handleForm(event) {
 		for (const e of copyForm.elements) {
 			e.value = e.placeholder;
 		}
-		console.log(copyForm);
 		document.body.appendChild(copyForm); // this is necessary for submit() to work
 		copyForm.submit(); // submit() skips the onsubmit function, and validation. requestSubmit() calls it.
 		// copyForm.requestSubmit();
@@ -52,8 +51,8 @@ function handleForm(event) {
 		// however, apparently it is not guaranteed that onchange events will trigger before submit events
 		// so I need something proper here
 		// could use oninput instead but it gets called a lot
+		// todo
 		alert('error');
 		event.preventDefault();
 	}
-	console.log(elements);
 }
