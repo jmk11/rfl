@@ -20,8 +20,8 @@ async function main() {
 	updateRaceResult(results);
 	results = simplifyEntry(results); // only need the exact rider names for setting the table, so can now replace results with simplified names
 
-	const apiURL = params.get('r') + '/.json?depth=1';
 	const raceTitleElem = document.getElementById('race-title');
+	const apiURL = 'https://www.reddit.com/comments/' + params.get('r') + '/.json?depth=1'; // 'https://www.reddit.com/r/peloton/comments/'
 	try {
 		const resp = await fetch(apiURL, {credentials: 'omit'}); // mode cors?
 		if (resp.status !== 200) {

@@ -131,6 +131,7 @@ th, td {
 
 /* Index page */
 .index form[name="results"] input[name="r"] {
+/* form[name="results"] input[type="url"] { */
     width: 700px;
 }
 .index form[name="results"] td {
