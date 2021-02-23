@@ -2,7 +2,7 @@
 // all-results thing is missing some people - even if their comment wasn't right and they got 0 they should still be listed
 // todo?: encode/sanitise reddit content before putting in page - xss
 // compress results page url parameters. I haven't found a compression large enough to justify the obfuscation of the url. I could also encode it more efficiently, eg
-// ?Julian+Alaphilippe|Wout+Van+Aert|Marc+Hirschi|Michal+Kwiatkowski|Jakob+Fuglsang|Primoz+Roglic|Michael+Matthews|Alejandro+Valverde|Maximilian+Schachmann|Damiano+Caruso|izsgs1%2Frfl_20_wc_rr_15_days_left_until_the_deadline_on
+// ?Julian+Alaphilippe|Wout+Van+Aert|Marc+Hirschi|Michal+Kwiatkowski|Jakob+Fuglsang|Primoz+Roglic|Michael+Matthews|Alejandro+Valverde|Maximilian+Schachmann|Damiano+Caruso|izsgs1
 
 let results = [];
 let sortedUsernames = []; // to avoid making global, could add searchResults() event using js + closure?
@@ -29,7 +29,7 @@ async function main() {
 		}
 		const json = await resp.json();
 		const postTitle = json[0]['data']['children'][0]['data']['title'];
-		const raceTitle = postTitle.split(']')[1].split(/(predictions|-)/i)[0]; //.trim();
+		const raceTitle = (postTitle.split(']')[1] || postTitle).split(/(predictions|-)/i)[0]; //.trim();
 		// title is generally of format: "[RFL 20] Fleche Wallonne Predictions - 1.5 days left until the deadline on September 30th!"
 		// const match = json[0]['data']['children'][0]['data']['title'].match(/](?<race>.*?)(?:predictions|-)/i);
 		// const raceTitle = (match && match.groups && match.groups.race) || '';

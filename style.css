@@ -146,5 +146,10 @@ th, td {
 .index form[name="results"] p {
     padding: 0 20px;
 }
+.index label {
+    display: block;
+    text-align: center;
+    /* padding: 10px; */
+}
 
 /* Giro color: #ff286e */
