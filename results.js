@@ -82,7 +82,11 @@ function loadEntries(comments) {
 				multIndex++;
 			}
 		}
-		entries[username] = { 'entry': entry, 'link': comment['data']['permalink'] };
+		let alteredUsername = username;
+		for (let i=1; entries[alteredUsername]; i++) {
+			alteredUsername = username + ` (${i})`;
+		}
+		entries[alteredUsername] = { 'entry': entry, 'link': comment['data']['permalink'] };
 
 		// console.log(entry.length);
 		// if (multIndex != 8) {
