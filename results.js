@@ -1,9 +1,3 @@
-// !! todo: remove more acutes etc. from rider names
-// all-results thing is missing some people - even if their comment wasn't right and they got 0 they should still be listed
-// todo?: encode/sanitise reddit content before putting in page - xss
-// compress results page url parameters. I haven't found a compression large enough to justify the obfuscation of the url. I could also encode it more efficiently, eg
-// ?Julian+Alaphilippe|Wout+Van+Aert|Marc+Hirschi|Michal+Kwiatkowski|Jakob+Fuglsang|Primoz+Roglic|Michael+Matthews|Alejandro+Valverde|Maximilian+Schachmann|Damiano+Caruso|izsgs1
-
 let results = [];
 let sortedUsernames = []; // to avoid making global, could add searchResults() event using js + closure?
 let rflEntries = {};
@@ -63,7 +57,7 @@ function processRFL(comments, results) {
 
 // return dictionary of {username : {entry: entry}}
 // todo weird cases test
-// this assumes that entries are in order x2.0, x1.8?
+// this assumes that entries are in order x2.0, x1.8
 function loadEntries(comments) {
 	let entries = {};
 	for (const comment of comments) {
@@ -257,8 +251,6 @@ function searchResults(event) {
 	let even = false;
 	for (const e of usernameElems) {
 		const row = e.parentNode;
-		// console.log(e.innerText);
-		// console.log(e);
 		// visibility: collapse seems to remove innerText, while display: none didn't.
 		// So I'm using textContent here instead.
 		if (e.textContent.match(re)) {
