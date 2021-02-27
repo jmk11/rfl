@@ -21,10 +21,14 @@ th, td {
 	color: red;
 	/* text-align: center; */
 }
-.results .correct {
-	color: mediumseagreen;
+.results .user-entry .correct {
+	color: seagreen;
 }
+/* .results .correct {
+	color: mediumseagreen;
+} */
 .results .user-results .correct {
+	color: mediumseagreen;
 	font-weight: bold;
 	/* font-size: 1.1em; */
 }
