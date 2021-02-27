@@ -7,13 +7,13 @@
   </head>
 
   <body class="index">
+    <h1>RFL Calculator</h1>
+    <p>
+      Enter top 10 and link to reddit predictions page.<br>
+      Make sure to spell all names correctly or the calculation will be incorrect.<br>
+      To test, you can leave all fields empty. This will use the placeholder values, which represent the 2020 Men's WC RR.
+    </p>
     <form name="results" onsubmit="handleForm(event)" action="results.html" onchange="inputChange(event)">
-      <h1>RFL Calculator</h1>
-      <p>
-        Enter top 10 and link to reddit predictions page.<br>
-        Make sure to spell all names correctly or the calculation will be incorrect.<br>
-        To test, you can leave all fields empty. This will use the placeholder values, which represent the 2020 Men's WC RR.
-      </p>
       <!-- <input type="url" name="firstcycling" placeholder="Firstcycling results link"> -->
       <table>
         <thead>
@@ -64,13 +64,9 @@
         </tbody>
       </table>
       <input type="url" name="r" placeholder="https://www.reddit.com/r/peloton/comments/izsgs1/rfl_20_wc_rr_15_days_left_until_the_deadline_on/"> <!-- pattern-->
-      <!-- <input type="url" placeholder="Link to reddit page" required value="https://www.reddit.com/r/peloton/comments/izsgs1/rfl_20_wc_rr_15_days_left_until_the_deadline_on/"> -->
-      <!-- <input hidden name="r"> -->
       <input type="submit" value="Get results">
-      <br> <!-- don't use br -->
       <button type="button" onclick="clearAll(event)">Clear all</button>
     </form>
-    <!-- <script id="lzutf8" src="https://cdn.jsdelivr.net/npm/lzutf8/build/production/lzutf8.js"></script> -->
     <script src="index.js"></script>
   </body>
 

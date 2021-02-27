@@ -1,155 +1,178 @@
 body {
-    font-family: sans-serif;
-    /* background: #f5f5f5; */
-    /* background: #D7B29D; */
-    background: #f5f5f5;
-    /* background-image: url("https://img.favpng.com/1/13/1/bicycle-drawing-cycling-motorcycle-png-favpng-KiaLdBaWFgM88AJiKV0ZBxcRC.jpg");
-    background-size: 70px 70px;
-    background-repeat: space; */
-    color: #222222;
-    margin: 0;
-}
-
-h1 {
-    padding: 10px 30px;
+	font-family: sans-serif;
+	/* background: #D7B29D; */
+	background: #f5f5f5;
+	/* background-image: url("https://img.favpng.com/1/13/1/bicycle-drawing-cycling-motorcycle-png-favpng-KiaLdBaWFgM88AJiKV0ZBxcRC.jpg");
+	background-size: 70px 70px;
+	background-repeat: space; */
+	color: #222222;
+	margin: 0;
 }
 
 table {
-    border-collapse: collapse;
+	border-collapse: collapse;
 }
 th, td {
-    padding: 10px;
+	padding: 10px;
 }
 
 /* User result table - top part of screen */
 .results .incorrect {
-    color: red;
-    /* text-align: center; */
+	color: red;
+	/* text-align: center; */
 }
 .results .correct {
-    color: mediumseagreen;
+	color: mediumseagreen;
 }
 .results .user-results .correct {
-    font-weight: bold;
-    /* font-size: 1.1em; */
+	font-weight: bold;
+	/* font-size: 1.1em; */
 }
 .results .correct.perfect-choice {
-    color: springgreen;
-    /* color: springgreen !important; */
+	color: springgreen;
+	/* color: springgreen !important; */
 }
 .results .user-results tr:last-of-type { /* .results .total-row */
-    font-weight: bold;
+	font-weight: bold;
 }
 
 .results .container {
-    display: flex;
-    width: 100%;
+	display: flex;
+	width: 100%;
 }
 .results .container > div {
-    padding: 10px 50px;
+	padding: 10px 50px;
 }
 
 .results .container > div:first-child { /* why using a selector like this */
-    /* background: #F3A712; */
-    /* background: #417B5A; */
-    background: #aaaaaa;
+	/* background: #F3A712; */
+	/* background: #417B5A; */
+	background: #aaaaaa;
 }
 /* .container > div:first-child th {
-    background: #055829;
+	background: #055829;
 }
 .container > div:first-child tr:nth-child(even) {
-    background: #67a582;
-}
-
-.container > div:last-child {
-    background: #98E2C6;
-    width: 100%;
+	background: #67a582;
+} */
+/* .container > div:last-child {
+	background: #98E2C6;
+	width: 100%;
 }
 .container > div:last-child th {
-    background: #5fd4a7;
+	background: #5fd4a7;
 }
 .container > div:last-child tr:nth-child(even) {
-    background: #b7dbcd;
+	background: #b7dbcd;
 } */
 /* .container tr:nth-child(even) {
-    background: #D7B29D;
+	background: #D7B29D;
 } */
 
 /* All results list - bottom part of screen */
 .results .all-results {
-    padding: 10px 50px 50px;
-    /* background: #4F86C6; */
-}
-.results .all-results tbody tr:hover {
-    background: #ff4136;
-    /*cursor: pointer;*/
-}
-.results .all-results th {
-    background: #1666c2;
-}
-/* .all-results tr:not(.hidden):nth-of-type(even) { /*nth-child *//*
-    background: #7bade6;
-} */
-.results .all-results tr.even { /*nth-child */
-    background: #7bade6;
-}
-.results .all-results tbody tr /*td:nth-child(2):hover*/ {
-    cursor: pointer;
-}
-/* Using visibility:collapse to keep row width the same but condense page height: https://stackoverflow.com/a/45864060 */
-.results tr.hidden {
-    /* display: none; */
-    visibility: collapse;
-    line-height: 0;
-    /* height: 0; */
-    /* visibility: collapse keeps the table width the same. Unfortunately it also keeps the height the same and seems to remove innerText */
-}
-.results tr.hidden * {
-    padding-bottom: 0;
-    padding-top: 0;
-    /* border: none; */
+	padding: 10px 50px 50px;
+	/* background: #4F86C6; */
 }
 .results .all-results-container {
-    display: flex;
-    align-items: flex-start;
-}
-.results .search {
-    margin-left: 150px; /* edit, don't use margin */
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-}
-.results .search input {
-    height: 50px;
+	display: flex;
+	align-items: flex-start;
 }
 
-/* Footer */
-.results footer {
-	background: navy; /* royalblue */
+.results .all-results th {
+	background: #1666c2; /* royalblue */
+}
+.results .all-results tbody tr /*td:nth-child(2):hover*/ {
+	cursor: pointer;
+}
+.results .all-results tbody tr:hover {
+	background: #ff4136;
+}
+.results .all-results tr.even { /*nth-child, nth-of-type */
+	background: #7bade6;
+}
+/* Using visibility:collapse and line height etc. to keep row width the same but condense page height: https://stackoverflow.com/a/45864060 */
+.results tr.hidden {
+	visibility: collapse;
+	line-height: 0;
+}
+.results tr.hidden * {
+	padding-bottom: 0;
+	padding-top: 0;
+	/* border: none; */
+}
+
+.results .search {
+	margin-left: 150px; /* edit */
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+}
+.results .search input {
+	height: 50px;
+}
+
+/* Disclaimers */
+.results h1 {
+	margin-bottom: 5px;
+	/* margin: 0;
+	padding: 20px 30px;
+	background: dodgerblue; */
+	padding: 10px 30px;
+}
+.results .disclaimer {
 	color: #eeeeee;
 	font-family: serif;
 	font-size: 0.92em;
-	padding: 15px;
+	/* padding: 15px; */
+}
+/* .results + footer { */
+.results footer.disclaimer {
+	background: navy; /* royalblue */
+	padding: 15px 20px;
+}
+.results div.disclaimer {
+	padding: 10px 20px;
+	background: #3838f0;
+
 }
 
 /* Index page */
-.index form[name="results"] input[name="r"] {
-/* form[name="results"] input[type="url"] { */
-    width: 700px;
+.index {
+	padding-left: 20px;
+}
+.index h1 {
+	color: #ff286e;
+}
+.index h1, .index p {
+	padding: 0 20px;
+}
+.index form[name="results"] {
+	padding-left: 10px;
+}
+.index form[name="results"] label {
+	display: block;
+	text-align: center;
+	/* padding: 10px; */
 }
 .index form[name="results"] td {
-    padding: 5px;
+	padding: 5px;
 }
-.index form[name="results"] h1 {
-    padding: 0 30px;
+.index form[name="results"] input[name="r"] {
+	/* form[name="results"] input[type="url"] { */
+	width: 700px;
 }
-.index form[name="results"] p {
-    padding: 0 20px;
+.index form[name="results"] input[type="submit"] {
+	margin-left: 5px;
 }
-.index label {
-    display: block;
-    text-align: center;
-    /* padding: 10px; */
+.index form[name="results"] button {
+	display: block;
+	margin-top: 10px;
+}
+.index button, .index input[type="submit"] {
+	padding: 3px 6px;
 }
 
-/* Giro color: #ff286e */
+/* #ff286e */
+/* #ff0 */
+/* #da291c */

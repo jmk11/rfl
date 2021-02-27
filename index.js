@@ -91,18 +91,8 @@ function handleForm(event) {
 function shortenLink(link) {
 	// Options for link formats: https://redd.it/izsgs1, https://www.reddit.com/comments/izsgs1, https://www.reddit.com/r/peloton/comments/izsgs1, https://www.reddit.com/r/peloton/comments/izsgs1/rfl_20_wc_rr_15_days_left_until_the_deadline_on/
 	// .json doesn't work on the first, which just serves a redirect, but does work on the others
-
-	// const suffix = link.split(/reddit\.com\/r\/peloton\/comments\//i)[1].replace(/\/+$/, '');
-	// const suffix = link.match(/reddit\.com\/r\/peloton\/comments\/(.+?)(?:\/+)?$/)[1]; // Better way to get group than index?
-	// const linkid = link.match(/reddit\.com\/r\/peloton\/comments\/(.+?)\//)[1];
+	// I want to extract the 'izsgs1' from these links
 
 	const match = link.match(/(?:reddit\.com\/(?:r\/peloton\/)?comments|redd\.it)\/(.*?)(?:\/|$)/);
 	return (match && match[1]) || null;
-
-	// try {
-	// 	const linkid = link.match(/(?:reddit\.com\/(?:r\/peloton\/)?comments|redd\.it)\/(.*?)(?:\/|$)/)[1];
-	// 	return linkid;
-	// } catch {
-	// 	return null;
-	// }
 }

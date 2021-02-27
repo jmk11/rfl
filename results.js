@@ -57,7 +57,7 @@ function processRFL(comments, results) {
 
 // return dictionary of {username : {entry: entry}}
 // todo weird cases test
-// this assumes that entries are in order x2.0, x1.8
+// this assumes that entries are in order x2.0, x1.8 - if an entry skips a multiplier, this will get stuck on that multiplier
 function loadEntries(comments) {
 	let entries = {};
 	for (const comment of comments) {
@@ -66,13 +66,12 @@ function loadEntries(comments) {
 		const entry = [];
 		const lines = body.split(/[\n\r]/);
 		let multIndex = 0;
-		console.log(username + ':\n' + body);
+		// console.log(username + ':\n' + body);
 		for (let i = 0; i < lines.length && multIndex < multStrs.length; i++) {
 			const rider = lines[i].split(multStrs[multIndex])[1];
 			if (rider) {
 				// entry[multKeys[multIndex]] = rider.trim().toLowerCase();
 				entry.push(rider.trim());
-				// If an entry skips a multiplier, this will get stuck on that multiplier
 				multIndex++;
 			}
 		}
@@ -81,28 +80,6 @@ function loadEntries(comments) {
 			alteredUsername = username + ` (${i})`;
 		}
 		entries[alteredUsername] = { 'entry': entry, 'link': comment['data']['permalink'] };
-
-		// console.log(entry.length);
-		// if (multIndex != 8) {
-		//     console.log(username);
-		//     console.log(lines);
-		//     console.log(entry);
-		// }
-
-
-		// cur = (comment.split('(x2.0)')[1] || "\n").split('\n');
-
-		// entry['x1.8'] = (comment.split('(x2.0)')[1] || "\n").split('\n')[0];
-		// entry['x1.6'] = (comment.split('(x2.0)')[1] || "\n").split('\n')[0];
-		// entry['x1.4'] = (comment.split('(x2.0)')[1] || "\n").split('\n')[0];
-		// entry['x1.2'] = (comment.split('(x2.0)')[1] || "\n").split('\n')[0];
-		// entry['x1.0a'] = (comment.split('(x2.0)')[1] || "\n").split('\n')[0];
-		// entry['x1.0b'] = (comment.split('(x2.0)')[1] || "\n").split('\n')[0];
-		// entry['x1.0c'] = (comment.split('(x2.0)')[1] || "\n").split('\n')[0];
-		// if (entry['x2.0'] === '') {
-		//     console.log('empty ' + username);
-		// } 
-		// console.log(entry['x2.0']);
 	}
 	return entries;
 }
@@ -112,7 +89,6 @@ function calculateScores(rflEntries, results) {
 	for (const user of Object.keys(rflEntries)) {
 		const entry = simplifyEntry(rflEntries[user]['entry']); // only simplify at this point so that the full version is displayed
 		rflEntries[user]['score'] = 0;
-		// n^2
 		for (let place = 0; place < results.length; place++) {
 			const entryIndex = entry.indexOf((results[place])); // Get index of result rider in entry
 			// if a rider is repeated in an entry (breaks rfl rules), returns first occurence
@@ -120,10 +96,6 @@ function calculateScores(rflEntries, results) {
 				rflEntries[user]['score'] += points[place] * multipliers[entryIndex];
 			}
 		}
-
-		// for (const key of Object.keys(multipliers)) {
-		//     if (rfl[user]['entry'][key]
-		// }
 	}
 	return rflEntries;
 }
@@ -155,12 +127,11 @@ function updateResults(rflEntries, usernames) {
 		even = !even;
 
 		row.addEventListener('click', () => {
-			// bubbles from table cell - event.target is table cell
-			// console.log(event.target.parentNode); // row - could use instead
+			// bubbles from table cell - event.target is table cell. could use event.target.parentNode instead of row
 			const username = row.getElementsByClassName('results-username')[0].innerText; // event.srcElement
 			// is it bad to use row, because that means that each event listener will be a different function so a lot of different functions?
 			updateUserEntry(rflEntries, username, results);
-			document.getElementById('user-results').scrollIntoView(); // behavior: smooth
+			document.getElementById('user-entry').scrollIntoView(); // behavior: smooth
 		});
 	}
 }
@@ -217,7 +188,7 @@ function updateUserEntry(rflEntries, username, results) {
 			multiplierElem.classList.add('incorrect');
 		}
 	}
-	console.assert(score === rflEntries[username]['score']);
+	console.assert(score === rflEntries[username]['score'], 'updateUserEntry() score === rflEntries score');
 	document.getElementById('user-score').innerText = score.toFixed(1);
 }
 
@@ -245,13 +216,13 @@ function simplifyRiderName(name) {
 // To keep correct position numbers after searching, I am hiding table rows instead of deleting and recreating (and should be faster??)
 function searchResults(event) {
 	const search = event.target.value;
-	// if (username) {
+	// empty search term - everything matches ''
 	const re = new RegExp(search, 'i');
 	const usernameElems = Array.from(document.getElementsByClassName('results-username'));
 	let even = false;
 	for (const e of usernameElems) {
 		const row = e.parentNode;
-		// visibility: collapse seems to remove innerText, while display: none didn't.
+		// visibility: collapse seems to remove innerText (display: none didn't)
 		// So I'm using textContent here instead.
 		if (e.textContent.match(re)) {
 			row.classList.remove('hidden');

@@ -8,8 +8,9 @@
 
   <body class="results">
     <h1 id="race-title">Waiting for reddit response...</h1>
+    <div class="disclaimer">Results are unofficial and may differ from official r/peloton results</div>
     <div class="container">
-      <div class="user-entry">
+      <div class="user-entry" id="user-entry">
         <h3 id="username">Your entry</h3>
         <table>
           <tr>
@@ -61,7 +62,7 @@
         <p><a class="user-link" id="user-link">Comment permalink</a></p>
       </div>
 
-      <div class="user-results" id="user-results">
+      <div class="user-results">
         <h3>Race result</h3>
         <table>
           <tr>
@@ -165,18 +166,17 @@
           </tbody>
         </table>
         <div class="search">
-          <h3>Search</h3>
-          <input type="search" name="search-username" oninput="searchResults(event)" placeholder="Username">
-        <!-- <form name="search"> -->
-        <!-- </form> -->
+          <label for="searchbar"><h3>Search</h3></label>
+          <input type="search" id="searchbar" oninput="searchResults(event)" placeholder="Username">
+        <!-- <form name="search"> </form> -->
         </div>
       </div>
     </div>
 
     <script src="results.js"></script>
   </body>
-  <footer>
-  	Results are unofficial and may differ from official r/peloton results, for example in cases of spelling differences, formatting differences or entries submitted outside time limits.
+  <footer class="disclaimer">
+  	Results are unofficial and may differ from official r/peloton results, for example for entries with unconvential spelling or formatting, or entries submitted outside time limits.
   </footer>
 
 </html>
