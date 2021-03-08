@@ -1,4 +1,4 @@
-const invalidLinkMessage = 'Link must be one of the following formats: https://redd.it/..., https://www.reddit.com/comments/..., https://www.reddit.com/r/peloton/comments/...';
+const invalidLinkMessage = 'Link must be one of the following formats: https://redd.it/..., https://www.reddit.com/comments/..., https://www.reddit.com/r/.../comments/...';
 // how to get newline in message?
 
 // Clear all input fields, quality of life
@@ -93,6 +93,6 @@ function shortenLink(link) {
 	// .json doesn't work on the first, which just serves a redirect, but does work on the others
 	// I want to extract the 'izsgs1' from these links
 
-	const match = link.match(/(?:reddit\.com\/(?:r\/peloton\/)?comments|redd\.it)\/(.*?)(?:\/|$)/);
+	const match = link.match(/(?:reddit\.com\/(?:r\/.+\/)?comments|redd\.it)\/(.*?)(?:\/|$)/);
 	return (match && match[1]) || null;
 }
