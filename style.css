@@ -89,10 +89,10 @@ th, td {
 #results-pg .all-results th {
 	background: #1666c2; /* royalblue */
 }
-#results-pg .all-results /*tbody*/ tr /*td:nth-child(2):hover*/ {
+#results-pg .all-results tbody tr /*td:nth-child(2):hover*/ {
 	cursor: pointer;
 }
-#results-pg .all-results /*tbody*/ tr:hover {
+#results-pg .all-results tbody tr:hover {
 	background: #ff4136;
 }
 #results-pg .all-results tr.even { /*nth-child, nth-of-type */
@@ -114,6 +114,9 @@ th, td {
 	position: -webkit-sticky;
 	position: sticky;
 	top: 0;
+}
+#results-pg .search-label {
+	display: block;
 }
 /* #results-pg .search input { */
 #results-pg .searchbox {
