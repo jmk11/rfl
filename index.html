@@ -1,73 +1,81 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8"/>
-    <title>RFL Calculator</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
+<html lang="en">
 
-  <body class="index">
-    <h1>RFL Calculator</h1>
-    <p>
-      Enter top 10 and link to reddit predictions page.<br>
-      Make sure to spell all names correctly or the calculation will be incorrect.<br>
-      To test, you can leave all fields empty. This will use the placeholder values, which represent the 2020 Men's WC RR.
-    </p>
-    <form name="results" onsubmit="handleForm(event)" action="results.html" onchange="inputChange(event)">
-      <!-- <input type="url" name="firstcycling" placeholder="Firstcycling results link"> -->
-      <table>
-        <thead>
-          <th>Position</th>
-          <th>Rider</th>
-        </thead>
-        <tbody>
-          <tr>
-            <td><label for="p1">1</label></td>
-            <td><input type="text" name="p1" id="p1" placeholder="Julian Alaphilippe"></td>
-          </tr>
-          <tr>
-            <td><label for="p2">2</label></td>
-            <td><input type="text" name="p2" id="p2" placeholder="Wout Van Aert"></td>
-          </tr>
-          <tr>
-            <td><label for="p3">3</label></td>
-            <td><input type="text" name="p3" id="p3" placeholder="Marc Hirschi"></td>
-          </tr>
-          <tr>
-            <td><label for="p4">4</label></td>
-            <td><input type="text" name="p4" id="p4" placeholder="Michal Kwiatkowski"></td>
-          </tr>
-          <tr>
-            <td><label for="p5">5</label></td>
-            <td><input type="text" name="p5" id="p5" placeholder="Jakob Fuglsang"></td>
-          </tr>
-          <tr>
-            <td><label for="p6">6</label></td>
-            <td><input type="text" name="p6" id="p6" placeholder="Primoz Roglic"></td>
-          </tr>
-          <tr>
-            <td><label for="p7">7</label></td>
-            <td><input type="text" name="p7" id="p7" placeholder="Michael Matthews"></td>
-          </tr>
-          <tr>
-            <td><label for="p8">8</label></td>
-            <td><input type="text" name="p8" id="p8" placeholder="Alejandro Valverde"></td>
-          </tr>
-          <tr>
-            <td><label for="p9">9</label></td>
-            <td><input type="text" name="p9" id="p9" placeholder="Maximilian Schachmann"></td>
-          </tr>
-          <tr>
-            <td><label for="p10">10</label></td>
-            <td><input type="text" name="p10" id="p10" placeholder="Damiano Caruso"></td>
-          </tr>
-        </tbody>
-      </table>
-      <input type="url" name="r" placeholder="https://www.reddit.com/r/peloton/comments/izsgs1/rfl_20_wc_rr_15_days_left_until_the_deadline_on/"> <!-- pattern-->
-      <input type="submit" value="Get results">
-      <button type="button" onclick="clearAll(event)">Clear all</button>
-    </form>
-    <script src="index.js"></script>
-  </body>
+<head>
+	<meta charset="UTF-8" />
+	<title>RFL Calculator</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body id="index-pg">
+	<header>
+		<h1>RFL Calculator</h1>
+		<p>
+			Enter top 10 and link to reddit predictions page.<br>
+			Make sure to spell all names correctly or the calculation will be incorrect.<br>
+			To test, you can leave all fields empty. This will use the placeholder values, which represent the 2020 Men's WC
+			RR.
+		</p>
+	</header>
+
+	<main>
+		<form name="results" onsubmit="handleForm(event)" action="results.html" onchange="inputChange(event)">
+			<!-- <input type="url" name="firstcycling" placeholder="Firstcycling results link"> -->
+			<table>
+				<thead>
+					<th>Position</th>
+					<th>Rider</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td><label for="p1">1</label></td>
+						<td><input type="text" name="p1" id="p1" placeholder="Julian Alaphilippe"></td>
+					</tr>
+					<tr>
+						<td><label for="p2">2</label></td>
+						<td><input type="text" name="p2" id="p2" placeholder="Wout Van Aert"></td>
+					</tr>
+					<tr>
+						<td><label for="p3">3</label></td>
+						<td><input type="text" name="p3" id="p3" placeholder="Marc Hirschi"></td>
+					</tr>
+					<tr>
+						<td><label for="p4">4</label></td>
+						<td><input type="text" name="p4" id="p4" placeholder="Michal Kwiatkowski"></td>
+					</tr>
+					<tr>
+						<td><label for="p5">5</label></td>
+						<td><input type="text" name="p5" id="p5" placeholder="Jakob Fuglsang"></td>
+					</tr>
+					<tr>
+						<td><label for="p6">6</label></td>
+						<td><input type="text" name="p6" id="p6" placeholder="Primoz Roglic"></td>
+					</tr>
+					<tr>
+						<td><label for="p7">7</label></td>
+						<td><input type="text" name="p7" id="p7" placeholder="Michael Matthews"></td>
+					</tr>
+					<tr>
+						<td><label for="p8">8</label></td>
+						<td><input type="text" name="p8" id="p8" placeholder="Alejandro Valverde"></td>
+					</tr>
+					<tr>
+						<td><label for="p9">9</label></td>
+						<td><input type="text" name="p9" id="p9" placeholder="Maximilian Schachmann"></td>
+					</tr>
+					<tr>
+						<td><label for="p10">10</label></td>
+						<td><input type="text" name="p10" id="p10" placeholder="Damiano Caruso"></td>
+					</tr>
+				</tbody>
+			</table>
+			<input type="url" name="r" placeholder="https://www.reddit.com/r/peloton/comments/izsgs1/rfl_20_wc_rr_15_days_left_until_the_deadline_on/"> <!-- pattern-->
+			<input type="submit" value="Get results">
+			<button type="button" onclick="clearAll(event)">Clear all</button>
+		</form>
+	</main>
+
+	<script src="index.js"></script>
+</body>
 
 </html>

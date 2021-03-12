@@ -1,182 +1,192 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8"/>
-    <title>RFL</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
+<html lang="en">
 
-  <body class="results">
-    <h1 id="race-title">Waiting for reddit response...</h1>
-    <div class="disclaimer">Results are unofficial and may differ from official r/peloton results</div>
-    <div class="container">
-      <div class="user-entry" id="user-entry">
-        <h3 id="username">Your entry</h3>
-        <table>
-          <tr>
-            <th>Multiplier</th>
-            <th>Rider</th>
-            <th>Position</th>
-          </tr>
-          <tr>
-            <td>(x2.0)</td>
-            <td class="user-rider"></td>
-            <td class="user-position"></td>
-          </tr>
-          <tr>
-            <td>(x1.8)</td>
-            <td class="user-rider"></td>
-            <td class="user-position"></td>
-          </tr>
-          <tr>
-            <td>(x1.6)</td>
-            <td class="user-rider"></td>
-            <td class="user-position"></td>
-          </tr>
-          <tr>
-            <td>(x1.4)</td>
-            <td class="user-rider"></td>
-            <td class="user-position"></td>
-          </tr>
-          <tr>
-            <td>(x1.2)</td>
-            <td class="user-rider"></td>
-            <td class="user-position"></td>
-          </tr>
-          <tr>
-            <td>(x1.0)</td>
-            <td class="user-rider"></td>
-            <td class="user-position"></td>
-          </tr>
-          <tr>
-            <td>(x1.0)</td>
-            <td class="user-rider"></td>
-            <td class="user-position"></td>
-          </tr>
-          <tr>
-            <td>(x1.0)</td>
-            <td class="user-rider"></td>
-            <td class="user-position"></td>
-          </tr>
-        </table>
-        <p><a class="user-link" id="user-link">Comment permalink</a></p>
-      </div>
+<head>
+	<meta charset="UTF-8" />
+	<title>RFL</title>
+	<link rel="stylesheet" href="style.css">
+</head>
 
-      <div class="user-results">
-        <h3>Race result</h3>
-        <table>
-          <tr>
-            <th>Position</th>
-            <th>Rider</th>
-            <th>Points</th>
-            <th>Multiplier</th>
-            <th>User's points</th>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td class="results-rider"></td>
-            <td>15</td>
-            <td class="user-multiplier"></td>
-            <td class="user-points"></td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td class="results-rider"></td>
-            <td>12</td>
-            <td class="user-multiplier"></td>
-            <td class="user-points"></td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td class="results-rider"></td>
-            <td>10</td>
-            <td class="user-multiplier"></td>
-            <td class="user-points"></td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td class="results-rider"></td>
-            <td>8</td>
-            <td class="user-multiplier"></td>
-            <td class="user-points"></td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td class="results-rider"></td>
-            <td>6</td>
-            <td class="user-multiplier"></td>
-            <td class="user-points"></td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td class="results-rider"></td>
-            <td>5</td>
-            <td class="user-multiplier"></td>
-            <td class="user-points"></td>
-          </tr>
-          <tr>
-            <td>7</td>
-            <td class="results-rider"></td>
-            <td>4</td>
-            <td class="user-multiplier"></td>
-            <td class="user-points"></td>
-          </tr>
-          <tr>
-            <td>8</td>
-            <td class="results-rider"></td>
-            <td>3</td>
-            <td class="user-multiplier"></td>
-            <td class="user-points"></td>
-          </tr>
-          <tr>
-            <td>9</td>
-            <td class="results-rider"></td>
-            <td>2</td>
-            <td class="user-multiplier"></td>
-            <td class="user-points"></td>
-          </tr>
-          <tr>
-            <td>10</td>
-            <td class="results-rider"></td>
-            <td>1</td>
-            <td class="user-multiplier"></td>
-            <td class="user-points"></td>
-          </tr>
-          <tr> <!-- class="total-row" -->
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>Score:</td>
-            <td id="user-score"></td>
-          </tr>
-        </table>
-      </div>
-    </div> <!-- / container-->
+<body id="results-pg">
+	<header>
+		<h1 id="race-title">Waiting for reddit response...</h1>
+		<div class="disclaimer">Results are unofficial and may differ from official r/peloton results</div>
+	</header>
 
-    <div class="all-results">
-      <h2>All results</h2>
-      <div class="all-results-container">
-        <table>
-          <thead>
-            <th>Position</th>
-            <th>Username</th>
-            <th>Points</th>
-          </thead>
-          <tbody id="allresults-tbody">
-          </tbody>
-        </table>
-        <div class="search">
-          <label for="searchbar"><h3>Search</h3></label>
-          <input type="search" id="searchbar" oninput="searchResults(event)" placeholder="Username">
-        <!-- <form name="search"> </form> -->
-        </div>
-      </div>
-    </div>
+	<main>
+		<div class="container">
+			<div class="user-entry" id="user-entry">
+				<h3 id="username">Your entry</h3>
+				<table>
+					<tr>
+						<th>Multiplier</th>
+						<th>Rider</th>
+						<th>Position</th>
+					</tr>
+					<tr>
+						<td>(x2.0)</td>
+						<td class="user-rider"></td>
+						<td class="user-position"></td>
+					</tr>
+					<tr>
+						<td>(x1.8)</td>
+						<td class="user-rider"></td>
+						<td class="user-position"></td>
+					</tr>
+					<tr>
+						<td>(x1.6)</td>
+						<td class="user-rider"></td>
+						<td class="user-position"></td>
+					</tr>
+					<tr>
+						<td>(x1.4)</td>
+						<td class="user-rider"></td>
+						<td class="user-position"></td>
+					</tr>
+					<tr>
+						<td>(x1.2)</td>
+						<td class="user-rider"></td>
+						<td class="user-position"></td>
+					</tr>
+					<tr>
+						<td>(x1.0)</td>
+						<td class="user-rider"></td>
+						<td class="user-position"></td>
+					</tr>
+					<tr>
+						<td>(x1.0)</td>
+						<td class="user-rider"></td>
+						<td class="user-position"></td>
+					</tr>
+					<tr>
+						<td>(x1.0)</td>
+						<td class="user-rider"></td>
+						<td class="user-position"></td>
+					</tr>
+				</table>
+				<p><a class="user-link" id="user-link">Comment permalink</a></p>
+			</div>
 
-    <script src="results.js"></script>
-  </body>
-  <footer class="disclaimer">
-  	Results are unofficial and may differ from official r/peloton results, for example for entries with unconventional spelling or formatting, or entries submitted outside time limits.
-  </footer>
+			<div class="user-results">
+				<h3>Race result</h3>
+				<table>
+					<tr>
+						<th>Position</th>
+						<th>Rider</th>
+						<th>Points</th>
+						<th>Multiplier</th>
+						<th>User's points</th>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td class="results-rider"></td>
+						<td>15</td>
+						<td class="user-multiplier"></td>
+						<td class="user-points"></td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td class="results-rider"></td>
+						<td>12</td>
+						<td class="user-multiplier"></td>
+						<td class="user-points"></td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td class="results-rider"></td>
+						<td>10</td>
+						<td class="user-multiplier"></td>
+						<td class="user-points"></td>
+					</tr>
+					<tr>
+						<td>4</td>
+						<td class="results-rider"></td>
+						<td>8</td>
+						<td class="user-multiplier"></td>
+						<td class="user-points"></td>
+					</tr>
+					<tr>
+						<td>5</td>
+						<td class="results-rider"></td>
+						<td>6</td>
+						<td class="user-multiplier"></td>
+						<td class="user-points"></td>
+					</tr>
+					<tr>
+						<td>6</td>
+						<td class="results-rider"></td>
+						<td>5</td>
+						<td class="user-multiplier"></td>
+						<td class="user-points"></td>
+					</tr>
+					<tr>
+						<td>7</td>
+						<td class="results-rider"></td>
+						<td>4</td>
+						<td class="user-multiplier"></td>
+						<td class="user-points"></td>
+					</tr>
+					<tr>
+						<td>8</td>
+						<td class="results-rider"></td>
+						<td>3</td>
+						<td class="user-multiplier"></td>
+						<td class="user-points"></td>
+					</tr>
+					<tr>
+						<td>9</td>
+						<td class="results-rider"></td>
+						<td>2</td>
+						<td class="user-multiplier"></td>
+						<td class="user-points"></td>
+					</tr>
+					<tr>
+						<td>10</td>
+						<td class="results-rider"></td>
+						<td>1</td>
+						<td class="user-multiplier"></td>
+						<td class="user-points"></td>
+					</tr>
+					<tr> <!-- class="total-row" -->
+						<td></td>
+						<td></td>
+						<td></td>
+						<td>Score:</td>
+						<td id="user-score"></td>
+					</tr>
+				</table>
+			</div>
+		</div> <!-- / container-->
+
+		<div class="all-results">
+			<h2>All results</h2>
+			<div class="all-results-container">
+				<table>
+					<thead>
+						<th>Position</th>
+						<th>Username</th>
+						<th>Points</th>
+					</thead>
+					<tbody id="allresults-tbody">
+					</tbody>
+				</table>
+				<div class="search">
+					<label for="searchbox">
+						<h3>Search</h3>
+					</label>
+					<input type="search" class="searchbox" id="searchbox" oninput="searchResults(event)" placeholder="Username">
+					<!-- <form name="search"> </form> -->
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<footer class="disclaimer">
+		Results are unofficial and may differ from official r/peloton results, for example for entries with unconventional
+		spelling or formatting, or entries submitted outside time limits.
+	</footer>
+
+	<script src="results.js"></script>
+</body>
 
 </html>
