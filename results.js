@@ -116,6 +116,8 @@ function updateResults(rflEntries, usernames) {
 	for (let i = 0; i < usernames.length; i++) {
 		const row = tbody.insertRow(i);
 		// row.setAttribute('username', usernames[i]); // storing this in dom bad?
+		row.setAttribute('tabindex', '0');
+		row.setAttribute('role', 'button');
 		row.insertCell(0).innerText = `${i + 1}`; // position in results
 		const username = row.insertCell(1); // username
 		username.innerText = usernames[i];
@@ -125,13 +127,23 @@ function updateResults(rflEntries, usernames) {
 			row.classList.add('even');
 		}
 		even = !even;
-
-		row.addEventListener('click', () => {
+		
+		const handleSelection = () => {
 			// bubbles from table cell - event.target is table cell. could use event.target.parentNode instead of row
 			const username = row.getElementsByClassName('results-username')[0].innerText; // event.srcElement
 			// is it bad to use row, because that means that each event listener will be a different function so a lot of different functions?
 			updateUserEntry(rflEntries, username, results);
 			document.getElementById('user-entry').scrollIntoView(); // behavior: smooth
+		};
+		row.addEventListener('click', () => {
+			row.blur(); // is this a good idea? for removing :focus style after clicking 
+			handleSelection();
+		});
+		row.addEventListener('keydown', (event) => {
+			if (event.code === 'Enter' || event.code === 'Space') {
+				event.preventDefault();
+				handleSelection();
+			}
 		});
 	}
 }

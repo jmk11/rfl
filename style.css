@@ -26,7 +26,7 @@ th, td {
 	/* text-align: center; */
 }
 #results-pg .user-entry .correct {
-	color: seagreen;
+	color: green;
 }
 /* #results-pg .correct {
 	color: mediumseagreen;
@@ -87,16 +87,17 @@ th, td {
 }
 
 #results-pg .all-results th {
-	background: #1666c2; /* royalblue */
+	background: #0F87FF; /* 1666c2, royalblue */
 }
 #results-pg .all-results tbody tr /*td:nth-child(2):hover*/ {
 	cursor: pointer;
 }
-#results-pg .all-results tbody tr:hover {
+#results-pg .all-results tbody tr:hover,
+#results-pg .all-results tbody tr:focus {
 	background: #ff4136;
 }
 #results-pg .all-results tr.even { /*nth-child, nth-of-type */
-	background: #7bade6;
+	background: #80BFFF; /* #6dc3f9, 7bade6 */
 }
 /* Using visibility:collapse and line height etc. to keep row width the same but condense page height: https://stackoverflow.com/a/45864060 */
 #results-pg tr.hidden {
@@ -114,6 +115,7 @@ th, td {
 	position: -webkit-sticky;
 	position: sticky;
 	top: 0;
+	order: 1;
 }
 #results-pg .search-label {
 	display: block;
